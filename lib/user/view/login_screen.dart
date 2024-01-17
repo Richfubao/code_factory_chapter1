@@ -7,9 +7,18 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
 import '../../common/component/custom_text_form_field.dart';
+import '../../common/view/root_tab.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
+
+  @override
+  State<LoginScreen> createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  String username = '';
+  String password = '';
 
   @override
   Widget build(BuildContext context) {
@@ -36,12 +45,16 @@ class LoginScreen extends StatelessWidget {
                   width: MediaQuery.of(context).size.width / 3 * 2,
                 ),
                 CustomTextFormField(
-                  onChanged: (String value) {},
+                  onChanged: (String value) {
+                    username = value;
+                  },
                   hintText: '이메일을 입력해주세요.',
                 ),
                 const SizedBox(height: 16.0),
                 CustomTextFormField(
-                  onChanged: (String value) {},
+                  onChanged: (String value) {
+                    password = value;
+                  },
                   hintText: '비밀번호를 입력해주세요.',
                   obscureText: true,
                 ),
@@ -49,7 +62,7 @@ class LoginScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () async {
                     // ID : 비밀번호
-                    final rawString = 'test@codefactory.ai:testtest';
+                    final rawString = '$username:$password';
 
                     Codec<String, String> stringTobase64 = utf8.fuse(base64);
                     String token = stringTobase64.encode(rawString);
@@ -60,8 +73,13 @@ class LoginScreen extends StatelessWidget {
                         'authorization': 'Basic $token',
                       }),
                     );
+
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => RootTab(),
+                      ),
+                    );
                     print(response.data);
-                    print('체크');
                   },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: PRIMARY_COLOR),

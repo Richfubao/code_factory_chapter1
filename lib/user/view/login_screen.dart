@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:code_factory/common/const/colors.dart';
+import 'package:code_factory/common/const/data.dart';
 import 'package:code_factory/common/layout/default_layout.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -27,7 +28,7 @@ class _LoginScreenState extends State<LoginScreen> {
     const simulatorIp = '127.0.0.1:3000';
     final ip = Platform.isIOS ? simulatorIp : emulatorIp;
 
-    return DefalutLayout(
+    return DefaultLayout(
       child: SingleChildScrollView(
         keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         child: SafeArea(
@@ -74,12 +75,19 @@ class _LoginScreenState extends State<LoginScreen> {
                       }),
                     );
 
+                    final refreshToken = response.data['refreshToken'];
+                    final accessToken = response.data['accessToken'];
+
+                    await storage.write(
+                        key: REFRESH_TOKEN_KEY, value: refreshToken);
+                    await storage.write(
+                        key: ACCESS_TOKEN_KEY, value: accessToken);
+
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (_) => RootTab(),
                       ),
                     );
-                    print(response.data);
                   },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: PRIMARY_COLOR),

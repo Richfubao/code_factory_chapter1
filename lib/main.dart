@@ -1,15 +1,14 @@
-import 'package:code_factory/common/component/custom_text_form_field.dart';
 import 'package:code_factory/user/view/login_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(
-    _App(),
+    const _App(),
   );
 }
 
 class _App extends StatelessWidget {
-  const _App({super.key});
+  const _App();
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +17,7 @@ class _App extends StatelessWidget {
         fontFamily: 'NotoSans',
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: const LoginScreen(),
     );
   }
 }

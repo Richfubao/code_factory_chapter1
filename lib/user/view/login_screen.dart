@@ -23,8 +23,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     final dio = Dio();
-    final emulatorIp = '10.0.2.2:3000';
-    final simulatorIp = '127.0.0.1:3000';
+    const emulatorIp = '10.0.2.2:3000';
+    const simulatorIp = '127.0.0.1:3000';
     final ip = Platform.isIOS ? simulatorIp : emulatorIp;
 
     return DefalutLayout(
@@ -83,7 +83,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   },
                   style:
                       ElevatedButton.styleFrom(backgroundColor: PRIMARY_COLOR),
-                  child: Text(
+                  child: const Text(
                     '로그인',
                   ),
                 ),
@@ -102,7 +102,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     print(response.data);
                   },
                   style: TextButton.styleFrom(foregroundColor: Colors.black),
-                  child: Text(
+                  child: const Text(
                     '회원가입',
                   ),
                 ),
@@ -120,7 +120,7 @@ class _Title extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       '환영합니다!',
       style: TextStyle(
         fontSize: 34,
@@ -136,7 +136,7 @@ class _SubTitle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
+    return const Text(
       '이메일과 비밀번호를 입력해서 로그인 해주세요!\n오늘도 성공적인 주문이 되길 :)',
       style: TextStyle(
         fontSize: 16,

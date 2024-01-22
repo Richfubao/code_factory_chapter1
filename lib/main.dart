@@ -1,7 +1,6 @@
 import 'package:code_factory/common/view/splash_screen.dart';
 import 'package:flutter/material.dart';
 
-import 'common/view/root_tab.dart';
 
 void main() {
   runApp(
@@ -19,7 +18,7 @@ class _App extends StatelessWidget {
         fontFamily: 'NotoSans',
       ),
       debugShowCheckedModeBanner: false,
-      home: const RootTab(),
+      home: const SplashScreen(),
     );
   }
 }

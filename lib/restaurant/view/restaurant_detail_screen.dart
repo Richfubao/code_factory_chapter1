@@ -20,6 +20,7 @@ class RestaurantDetailScreen extends StatelessWidget {
             deliveryFee: 3000,
             ratings: 4.76,
             isDetail: true,
+            detail: '맛있는 떡볶이',
           ),
         ],
       ),

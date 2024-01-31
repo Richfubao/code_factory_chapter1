@@ -1,6 +1,7 @@
 import 'package:code_factory/common/layout/default_layout.dart';
 import 'package:code_factory/product/component/product_card.dart';
 import 'package:code_factory/restaurant/component/restaurant_card.dart';
+import 'package:code_factory/restaurant/repository/restaurant_repository.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 
@@ -15,40 +16,37 @@ class RestaurantDetailScreen extends StatelessWidget {
     super.key,
   });
 
-  Future<Map<String, dynamic>> getRestaurantdetail() async {
+  Future<RestaurantDetailModel> getRestaurantdetail() async {
     final dio = Dio();
-    final accessToken = await storage.read(key: ACCESS_TOKEN_KEY);
-    final resp = await dio.get(
-      'http://$ip/restaurant/$id',
-      options: Options(headers: {
-        'authorization': 'Bearer $accessToken',
-      }),
-    );
-    return resp.data;
-  }
 
+    final repository = RestaurantRepository(dio, baseUrl: 'http://$ip/restaurant');
+    return repository.getRestaurantDetail(id: id);
+
+  }
   @override
   Widget build(BuildContext context) {
     return DefaultLayout(
       title: '불타는 떡볶이',
-      child: FutureBuilder<Map<String, dynamic>>(
+      child: FutureBuilder<RestaurantDetailModel>(
         future: getRestaurantdetail(),
-        builder: (_, AsyncSnapshot<Map<String, dynamic>> snapshot) {
-          print(snapshot.data);
+        builder: (_, AsyncSnapshot<RestaurantDetailModel> snapshot) {
+          if(snapshot.hasError){
+            return Center(
+              child: Text(snapshot.error.toString()),
+            );
+          }
           if (!snapshot.hasData) {
             return Center(
               child: CircularProgressIndicator(),
             );
           }
-          final item = RestaurantDetailModel.fromJson(
-             snapshot.data!,
-          );
+
           return CustomScrollView(
             slivers: [
-              renderTop(model: item),
+              renderTop(model: snapshot.data!),
               renderLabel(),
               renderProducts(
-                products: item.products,
+                products: snapshot.data!.products,
               ),
             ],
           );
